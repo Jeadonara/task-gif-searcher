@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     maxHeight: 48,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     opacity: 0.5,
-    maxWidth: '90%',
     borderRadius: 48,
   },
   buttonContainer: {

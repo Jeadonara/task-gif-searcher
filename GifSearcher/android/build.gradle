@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "30.0.2"
+        buildToolsVersion = "29.0.3"
         minSdkVersion = 21
         compileSdkVersion = 30
         targetSdkVersion = 30
@@ -11,9 +11,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://storage.googleapis.com/r8-releases/raw'
+        }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
+        classpath 'com.android.tools:r8:1.6.88'
+        classpath("com.android.tools.build:gradle:3.5.4")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

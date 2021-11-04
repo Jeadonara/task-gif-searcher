@@ -26,6 +26,16 @@ const commonStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginVertical: 16,
+    marginHorizontal: 16,
+  },
+  titleText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  captionText: {
+    fontSize: 12,
+    color: 'black',
   },
 });
 export default commonStyles;
