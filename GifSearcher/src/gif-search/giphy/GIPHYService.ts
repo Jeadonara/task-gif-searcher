@@ -1,4 +1,4 @@
-import {EMPTY_GIF_MODEL, GifModel} from '../models/GifModel';
+import {EMPTY_GIF, GifModel} from '../models/GifModel';
 import {GIPHYModel} from './GIPHYModel';
 import restClient from '../../common/rest/RestClient';
 
@@ -9,7 +9,7 @@ class GIPHYService {
   getGifs = async (search: string): Promise<GifModel[]> => {
     return restClient
       .get<{data: GIPHYModel[]}>(`${BASE_URL}/search`, {
-        apiKey: API_KEY,
+        api_key: API_KEY,
         q: search,
       })
       .then(response => {
@@ -18,6 +18,7 @@ class GIPHYService {
             title: gif.title,
             source: gif.images.original.url,
             rating: gif.rating,
+            sourceStill: gif.images.fixed_height_small_still.url,
             aspectRatio:
               +gif.images.original.width / +gif.images.original.height,
           };
@@ -25,12 +26,16 @@ class GIPHYService {
         });
         return Promise.resolve(gifs);
       })
-      .catch(() => Promise.resolve([]));
+      .catch(error => {
+        console.warn(error);
+
+        return Promise.resolve([]);
+      });
   };
   getRandomGif = async (): Promise<GifModel> => {
     return restClient
       .get<{data: GIPHYModel}>(`${BASE_URL}/random`, {
-        apiKey: API_KEY,
+        api_key: API_KEY,
       })
       .then(response => {
         const gif = response.data;
@@ -38,11 +43,12 @@ class GIPHYService {
           title: gif.title,
           source: gif.images.original.url,
           rating: gif.rating,
+          sourceStill: gif.images.fixed_height_small_still.url,
           aspectRatio: +gif.images.original.width / +gif.images.original.height,
         };
         return Promise.resolve(model);
       })
-      .catch(() => Promise.resolve(EMPTY_GIF_MODEL));
+      .catch(() => Promise.resolve(EMPTY_GIF));
   };
 }
 
