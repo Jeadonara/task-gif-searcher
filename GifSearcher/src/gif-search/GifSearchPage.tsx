@@ -12,6 +12,7 @@ const GifSearchPage = () => {
   const [gif, setGif] = useState(EMPTY_GIF);
   const [gifs, setGifs] = useState(EMPTY_GIF_COLLECTION);
   const timeInterval = useRef<NodeJS.Timer | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const renderRandomGif = () => {
     giphyService.getRandomGif().then(randomGif => {
@@ -28,6 +29,9 @@ const GifSearchPage = () => {
   };
 
   useEffect(() => {
+    if (isSearching) {
+      return;
+    }
     renderRandomGif();
     timeInterval.current = setInterval(renderRandomGif, 10000);
     return () => {
@@ -35,10 +39,11 @@ const GifSearchPage = () => {
         clearInterval(timeInterval.current);
       }
     };
-  }, []);
+  }, [isSearching]);
 
   useEffect(() => {
     if (search && search.length > 2) {
+      setIsSearching(true);
       if (timeInterval.current) {
         clearInterval(timeInterval.current);
       }
@@ -49,7 +54,10 @@ const GifSearchPage = () => {
 
   return (
     <View style={commonStyles.pageContainer}>
-      <SearchInput onValueUpdate={setSearch} />
+      <SearchInput
+        onValueUpdate={setSearch}
+        onSearchCancelled={() => setIsSearching(false)}
+      />
       <SingleGif gif={gif} />
       <GifCollection gifs={gifs} />
     </View>

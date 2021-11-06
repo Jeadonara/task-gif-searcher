@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import commonStyles from '../styles/CommonStyles';
+import commonStyles, {DEFAULT_SPACING} from '../styles/CommonStyles';
 
 interface IconPropTypes {
   width?: number;
@@ -21,7 +21,10 @@ const Icon = (props: IconPropTypes) => {
       source={props.source}
       style={[
         props.style,
-        {width: props.width || 16, height: props.height || 16},
+        {
+          width: props.width || DEFAULT_SPACING,
+          height: props.height || DEFAULT_SPACING,
+        },
       ]}
     />
   );

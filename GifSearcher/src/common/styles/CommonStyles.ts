@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-
+export const DEFAULT_SPACING = 16;
 const commonStyles = StyleSheet.create({
   rowContainer: {
     flex: 1,
@@ -25,8 +25,8 @@ const commonStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginVertical: 16,
-    marginHorizontal: 16,
+    marginVertical: DEFAULT_SPACING,
+    marginHorizontal: DEFAULT_SPACING,
   },
   titleText: {
     fontSize: 14,

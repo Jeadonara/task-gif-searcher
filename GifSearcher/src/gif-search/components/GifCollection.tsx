@@ -1,6 +1,7 @@
 import React from 'react';
 import {GifModel} from '../models/GifModel';
 import {FlatList, Image, ListRenderItemInfo, StyleSheet} from 'react-native';
+import {DEFAULT_SPACING} from '../../common/styles/CommonStyles';
 
 const ITEM_HEIGHT = 100;
 const ITEM_MARGIN = 8;
@@ -15,7 +16,7 @@ const GifCollection = (props: {gifs: GifModel[]}) => {
         initialNumToRender={10}
         horizontal={false}
         showsVerticalScrollIndicator={false}
-        style={{marginVertical: 16}}
+        style={{marginVertical: DEFAULT_SPACING}}
         contentContainerStyle={{maxWidth: '100%'}}
         keyExtractor={item => item.source}
         getItemLayout={(data, index) => ({
