@@ -1,12 +1,21 @@
 import React from 'react';
 import {GifModel} from '../models/GifModel';
-import {FlatList, Image, ListRenderItemInfo, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {DEFAULT_SPACING} from '../../common/styles/CommonStyles';
 
 const ITEM_HEIGHT = 100;
 const ITEM_MARGIN = 8;
 
-const GifCollection = (props: {gifs: GifModel[]}) => {
+const GifCollection = (props: {
+  gifs: GifModel[];
+  onGifClicked: (gif: GifModel) => void;
+}) => {
   const {gifs} = props;
   if (gifs && gifs.length > 0) {
     return (
@@ -25,10 +34,15 @@ const GifCollection = (props: {gifs: GifModel[]}) => {
           index,
         })}
         renderItem={(value: ListRenderItemInfo<GifModel>) => (
-          <Image
-            source={{uri: value.item.sourceStill}}
-            style={[styles.gif, {aspectRatio: value.item.aspectRatio}]}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              props.onGifClicked(value.item);
+            }}>
+            <Image
+              source={{uri: value.item.sourceStill}}
+              style={[styles.gif, {aspectRatio: value.item.aspectRatio}]}
+            />
+          </TouchableOpacity>
         )}
       />
     );

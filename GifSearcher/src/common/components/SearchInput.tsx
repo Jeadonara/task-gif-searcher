@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     maxWidth: 24,
   },
   cancelButtonContainer: {
-    ...commonStyles.defaultButtonContainer,
+    ...commonStyles.buttonContainer,
     justifyContent: 'center',
     maxWidth: 64,
   },

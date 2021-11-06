@@ -13,7 +13,7 @@ const commonStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  defaultButtonContainer: {
+  buttonContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -36,6 +36,22 @@ const commonStyles = StyleSheet.create({
   captionText: {
     fontSize: 12,
     color: 'black',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 120,
+    width: '100%',
+  },
+  headerButton: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    alignSelf: 'flex-start',
+    height: 120,
+    maxWidth: 48,
+    marginRight: 32,
   },
 });
 export default commonStyles;

@@ -6,22 +6,31 @@ import giphyService from './giphy/GIPHYService';
 import SingleGif from './components/SingleGif';
 import {EMPTY_GIF, EMPTY_GIF_COLLECTION} from './models/GifModel';
 import GifCollection from './components/GifCollection';
+import GifModal from './components/GifModal';
 
 const GifSearchPage = () => {
   const [search, setSearch] = useState('');
   const [gif, setGif] = useState(EMPTY_GIF);
   const [gifs, setGifs] = useState(EMPTY_GIF_COLLECTION);
-  const timeInterval = useRef<NodeJS.Timer | null>(null);
+  const [gifClicked, setGifClicked] = useState(EMPTY_GIF);
+  const timeIntervalRef = useRef<NodeJS.Timer | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
-  const renderRandomGif = () => {
+  const clearRandomGifInterval = (): void => {
+    if (timeIntervalRef.current) {
+      clearInterval(timeIntervalRef.current);
+    }
+    timeIntervalRef.current = null;
+  };
+
+  const getRandomGif = () => {
     giphyService.getRandomGif().then(randomGif => {
       setGifs(EMPTY_GIF_COLLECTION);
       setGif(randomGif);
     });
   };
 
-  const renderSearchedGifs = (input: string) => {
+  const getSearchedGifs = (input: string) => {
     giphyService.getGifs(input).then(gifSearchOutput => {
       setGif(EMPTY_GIF);
       setGifs(gifSearchOutput);
@@ -32,23 +41,18 @@ const GifSearchPage = () => {
     if (isSearching) {
       return;
     }
-    renderRandomGif();
-    timeInterval.current = setInterval(renderRandomGif, 10000);
+    getRandomGif();
+    timeIntervalRef.current = setInterval(getRandomGif, 10000);
     return () => {
-      if (timeInterval.current) {
-        clearInterval(timeInterval.current);
-      }
+      clearRandomGifInterval();
     };
   }, [isSearching]);
 
   useEffect(() => {
     if (search && search.length > 2) {
       setIsSearching(true);
-      if (timeInterval.current) {
-        clearInterval(timeInterval.current);
-      }
-      timeInterval.current = null;
-      renderSearchedGifs(search);
+      clearRandomGifInterval();
+      getSearchedGifs(search);
     }
   }, [search]);
 
@@ -59,7 +63,11 @@ const GifSearchPage = () => {
         onSearchCancelled={() => setIsSearching(false)}
       />
       <SingleGif gif={gif} />
-      <GifCollection gifs={gifs} />
+      <GifCollection
+        gifs={gifs}
+        onGifClicked={clickedGif => setGifClicked(clickedGif)}
+      />
+      <GifModal gif={gifClicked} onClose={() => setGifClicked(EMPTY_GIF)} />
     </View>
   );
 };

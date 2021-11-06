@@ -39,7 +39,7 @@ interface IconButtonPropTypes {
 const IconButton = (props: IconButtonPropTypes) => {
   return (
     <TouchableOpacity
-      style={[commonStyles.defaultButtonContainer, props.style]}
+      style={[commonStyles.buttonContainer, props.style]}
       onPress={props.onClick}>
       <Icon {...props.iconProps} />
     </TouchableOpacity>
